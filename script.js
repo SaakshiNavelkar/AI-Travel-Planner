@@ -77,7 +77,7 @@ async function generateAIItinerary(destination,days,budget,food){
 
 try{
 
-const response = await fetch("http://localhost:5000/generate",{
+const response = await fetch("https://ai-travel-backend-6rui.onrender.com/generate",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -89,6 +89,10 @@ budget,
 food
 })
 });
+
+if(!response.ok){
+throw new Error("Server error");
+}
 
 const data = await response.json();
 
@@ -102,8 +106,8 @@ return data.candidates[0].content.parts[0].text;
 
 }catch(error){
 
-console.error(error);
-return "Failed to generate itinerary.";
+console.error("ERROR:", error);
+return "Failed to generate itinerary. Please try again.";
 
 }
 
