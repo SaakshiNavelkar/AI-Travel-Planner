@@ -30,7 +30,6 @@ Rules:
 
 try {
 
-    // 🔍 Debug check
     if (!process.env.GEMINI_API_KEY) {
         console.error("API KEY MISSING");
         return res.status(500).json({ error: "API key not configured" });
@@ -40,15 +39,17 @@ try {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // ✅ FIXED MODEL NAME
+    // ✅ FINAL WORKING MODEL
     const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash-latest"
+        model: "gemini-1.5-flash"
     });
 
-    const result = await model.generateContent(prompt);
+    // ✅ IMPORTANT FIX: correct method usage
+    const result = await model.generateContent({
+        contents: [{ parts: [{ text: prompt }] }]
+    });
 
-    const response = await result.response;
-    const text = response.text();
+    const text = result.response.text();
 
     res.json({
         candidates: [
@@ -69,7 +70,6 @@ try {
 
 });
 
-// ✅ IMPORTANT FIX FOR RENDER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
