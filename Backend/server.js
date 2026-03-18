@@ -30,6 +30,9 @@ Rules:
 
 try {
 
+    // 🔍 Debug (optional but helpful)
+    console.log("API KEY:", process.env.GEMINI_API_KEY ? "Loaded" : "Missing");
+
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     const model = genAI.getGenerativeModel({
@@ -60,6 +63,9 @@ try {
 
 });
 
-app.listen(5000, () => {
-    console.log("Server running on http://localhost:5000");
+// ✅ IMPORTANT FIX FOR RENDER
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
