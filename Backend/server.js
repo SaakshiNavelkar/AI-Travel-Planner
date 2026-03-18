@@ -30,13 +30,19 @@ Rules:
 
 try {
 
-    // 🔍 Debug (optional but helpful)
-    console.log("API KEY:", process.env.GEMINI_API_KEY ? "Loaded" : "Missing");
+    // 🔍 Debug check
+    if (!process.env.GEMINI_API_KEY) {
+        console.error("API KEY MISSING");
+        return res.status(500).json({ error: "API key not configured" });
+    }
+
+    console.log("API KEY: Loaded");
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+    // ✅ FIXED MODEL NAME
     const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash"
+        model: "gemini-1.5-flash-latest"
     });
 
     const result = await model.generateContent(prompt);
