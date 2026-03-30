@@ -157,38 +157,36 @@ sections.forEach(function(day,index){
 
 const lines=day.trim().split("\n").filter(l=>l.trim()!="");
 
-let places=[];
-let restaurant="";
-let dish="";
+let places = [];
+let restaurant = "";
+let dish = "";
+let activity = "";
 
-lines.forEach(line=>{
+lines.forEach(line => {
 
-line=line.trim();
+line = line.trim();
 
-/* Detect places */
-
-if(line.toLowerCase().includes("places")){
-return;
+/* Places */
+if(line.toLowerCase().includes("places to visit")){
+const value = line.split(":")[1];
+if(value){
+places = value.split(",").map(p => p.trim());
+}
 }
 
 /* Restaurant */
-
-if(line.toLowerCase().includes("restaurant suggestion")){
-restaurant=line.split(":")[1]?.trim() || "";
-return;
+else if(line.toLowerCase().includes("restaurant suggestion")){
+restaurant = line.split(":")[1]?.trim() || "";
 }
 
 /* Dish */
-
-if(line.toLowerCase().includes("dish to try")){
-dish=line.split(":")[1]?.trim() || "";
-return;
+else if(line.toLowerCase().includes("dish to try")){
+dish = line.split(":")[1]?.trim() || "";
 }
 
-/* Otherwise it's a place */
-
-if(!restaurant && !dish){
-places.push(line);
+/* Activity */
+else if(line.toLowerCase().includes("activity")){
+activity = line.split(":")[1]?.trim() || "";
 }
 
 });
@@ -212,14 +210,19 @@ card.innerHTML=`
 
 <h3>📅 Day ${index+1}</h3>
 
-<p><strong>📍Places to Visit</strong></p>
+<p><strong>📍 Places to Visit</strong></p>
 <p>${places.join("<br>")}</p>
 
 <p><strong>🍽️ Restaurant Suggestion</strong></p>
-<p>${restaurant}</p>
+<p>${restaurant || "Not available"}</p>
 
 <p><strong>🍜 Dish to Try</strong></p>
-<p>${dish}</p>
+<p>${dish || "Not available"}</p>
+
+${activity && activity.toLowerCase() !== "none" ? `
+<p><strong>🎯 Activity</strong></p>
+<p>${activity}</p>
+` : ""}
 
 `;
 

@@ -17,21 +17,31 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.post("/generate", async (req, res) => {
 
   const { destination, days, budget, food } = req.body;
-
-  const prompt = `
+  
+const prompt = `
 Create a ${days}-day travel itinerary for ${destination}.
 
 Budget: ${budget}
 Food preference: ${food}
 
-Rules:
-- Start directly from Day 1
-- Exactly 1 or 2 places per day
-- Restaurant must be written on the SAME line
-- Dish must be written on the SAME line
-- Do NOT add travel tips
-- Do NOT add explanations
-- Do NOT use markdown symbols
+FORMAT STRICTLY:
+
+Day 1
+Places to Visit: <place1>, <place2>
+Restaurant Suggestion: <restaurant name>
+Dish to Try: <specific dish name>
+Activity: <activity>
+
+Day 2
+...
+
+RULES:
+- ALWAYS give real restaurant names
+- ALWAYS give real dish names
+- Budget must affect restaurant quality
+- DO NOT write generic text like "local restaurant"
+- DO NOT change headings
+- DO NOT add extra text
 `;
 
   try {
