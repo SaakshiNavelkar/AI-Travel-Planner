@@ -60,11 +60,7 @@ document.getElementById("loading-screen").style.display="flex";
 
 const itinerary=await generateAIItinerary(destination,days,budget,food);
 
-setTimeout(function(){
-
 displayItinerary(itinerary);
-
-},2000);
 
 });
 

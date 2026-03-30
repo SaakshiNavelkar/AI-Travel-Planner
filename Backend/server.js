@@ -24,24 +24,32 @@ Create a ${days}-day travel itinerary for ${destination}.
 Budget: ${budget}
 Food preference: ${food}
 
-FORMAT STRICTLY:
+IMPORTANT: Follow this format EXACTLY. Do not change anything.
 
 Day 1
-Places to Visit: <place1>, <place2>
-Restaurant Suggestion: <restaurant name>
-Dish to Try: <specific dish name>
-Activity: <activity>
+Places to Visit: place1, place2
+Restaurant Suggestion: restaurant name only
+Dish to Try: dish name only
+Activity: activity or NONE
 
 Day 2
-...
+Places to Visit: place1, place2
+Restaurant Suggestion: restaurant name only
+Dish to Try: dish name only
+Activity: activity or NONE
 
 RULES:
-- ALWAYS give real restaurant names
-- ALWAYS give real dish names
-- Budget must affect restaurant quality
-- DO NOT write generic text like "local restaurant"
-- DO NOT change headings
-- DO NOT add extra text
+- Each field MUST be on a NEW LINE
+- DO NOT combine fields in one line
+- DO NOT write extra words
+- DO NOT explain anything
+- DO NOT add descriptions
+- Restaurant must be real and match budget:
+    low → street/local
+    medium → popular restaurants
+    luxury → premium/fine dining
+- Dish must be specific (not "local food")
+- If no activity → write NONE
 `;
 
   try {
