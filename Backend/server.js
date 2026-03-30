@@ -40,7 +40,9 @@ Rules:
       model: "gemini-1.5-flash-001"
     });
 
-    const result = await model.generateContent(prompt);
+    const result = await model.generateContent({
+  contents: [{ parts: [{ text: prompt }] }]
+});
 
     const text = result.response.text();
 
