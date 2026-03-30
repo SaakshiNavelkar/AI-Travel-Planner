@@ -37,14 +37,13 @@ Rules:
   try {
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-001"
-    });
-
-    const result = await model.generateContent({
-  contents: [{ parts: [{ text: prompt }] }]
+  model: "gemini-2.5-flash"
 });
 
-    const text = result.response.text();
+const result = await model.generateContent(prompt);
+
+// safer extraction
+const text = result.response.candidates[0].content.parts[0].text;
 
     res.json({ plan: text });
 
